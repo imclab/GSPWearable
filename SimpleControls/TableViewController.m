@@ -150,30 +150,44 @@
 }
 
 -(void)sendData {
-    NSURL *url = [NSURL URLWithString:@"http://10.20.2.184:4567/"];
+    NSURL *url = [NSURL URLWithString:@"http://shrouded-springs-7594.herokuapp.com/"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        UInt8 buf[3] = {0x01, 0x00, 0x00};
+        NSString *color = [JSON objectForKey:@"color"];
+        
+        UInt8 buf[4] = { 0x00, 0x00, 0x00, 0x00};
         
         if (on) {
-            buf[1] = 0x00;
+            buf[0] = 0x00;
             on = NO;
         } else {
-            buf[1] = 0x01;
+            buf[0] = 0x01;
             on = YES;
         }
         
-        NSData *data = [[NSData alloc] initWithBytes:buf length:3];
+        if( [color isEqualToString:@"red"] ) {
+            buf[1] = 0x01;
+        }
+        
+        if( [color isEqualToString:@"green"] ) {
+            buf[2] = 0x01;
+        }
+        
+        if( [color isEqualToString:@"blue"] ) {
+            buf[3] = 0x01;
+        }
+        
+        NSData *data = [[NSData alloc] initWithBytes:buf length:4];
         [ble write:data];
         
         NSLog(@"success");
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON){
-        UInt8 buf[3] = {0x01, 0x00, 0x00};
+        UInt8 buf[4] = { 0x00, 0x00, 0x00, 0x00};
         
-        buf[1] = 0x00;
+        buf[0] = 0x00;
         on = NO;
         
-        NSData *data = [[NSData alloc] initWithBytes:buf length:3];
+        NSData *data = [[NSData alloc] initWithBytes:buf length:4];
         [ble write:data];
         
         NSLog(@"error");
