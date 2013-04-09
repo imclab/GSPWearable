@@ -20,6 +20,7 @@
 		2950A9CA164A8459005C150E /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2950A9C9164A8459005C150E /* TableViewController.m */; };
 		298C8463164A0F000020AD9A /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 298C8462164A0F000020AD9A /* CoreBluetooth.framework */; };
 		902898452C1E44F7A418DE35 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 532461C8E2124EC6AEC4942B /* libPods.a */; };
+		E260730D171399EB00B2F4AA /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E260730C171399EB00B2F4AA /* icon.png */; };
 		E294B94017137C1E000A83F7 /* BLE.m in Sources */ = {isa = PBXBuildFile; fileRef = E294B93E17137C1E000A83F7 /* BLE.m */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +44,7 @@
 		298C8462164A0F000020AD9A /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		532461C8E2124EC6AEC4942B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1059D8FA6F646C38FF4CD3D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		E260730C171399EB00B2F4AA /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		E294B93D17137C1E000A83F7 /* BLE.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLE.h; sourceTree = "<group>"; };
 		E294B93E17137C1E000A83F7 /* BLE.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BLE.m; sourceTree = "<group>"; };
 		E294B93F17137C1E000A83F7 /* BLEDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BLEDefines.h; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 		291C7BA71648AE9100403B08 = {
 			isa = PBXGroup;
 			children = (
+				E260730C171399EB00B2F4AA /* icon.png */,
 				291C7BBC1648AE9100403B08 /* SimpleControls */,
 				291C7BB51648AE9100403B08 /* Frameworks */,
 				291C7BB31648AE9100403B08 /* Products */,
@@ -189,6 +192,7 @@
 				291C7BCB1648AE9100403B08 /* Default@2x.png in Resources */,
 				291C7BCD1648AE9100403B08 /* Default-568h@2x.png in Resources */,
 				291C7BD01648AE9100403B08 /* MainStoryboard.storyboard in Resources */,
+				E260730D171399EB00B2F4AA /* icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
