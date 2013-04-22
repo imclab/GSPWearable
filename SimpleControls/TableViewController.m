@@ -150,37 +150,49 @@
 }
 
 -(void)sendData {
-    NSURL *url = [NSURL URLWithString:@"http://shrouded-springs-7594.herokuapp.com/"];
+    NSURL *url = [NSURL URLWithString:@"http://gspbetagroup-userstream.herokuapp.com/twitter/FreedomRiders1.json"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-        NSString *color = [JSON objectForKey:@"color"];
         
-        UInt8 buf[4] = { 0x00, 0x00, 0x00, 0x00};
         
-        if (on) {
-            buf[0] = 0x00;
-            on = NO;
+        NSString *status = [JSON objectForKey:@"status"];
+
+        
+        if( ![status isEqualToString:@"OK"] ) {
+            NSLog(@"Error in parsing data.");
         } else {
-            buf[0] = 0x01;
-            on = YES;
+            NSString *type = [JSON objectForKey:@"type"];
+            NSArray *payload = [JSON objectForKey:@"payload"];
+            if( [type isEqualToString:@"twitter"] ) {
+                UInt8 buf[4] = { 0x00, 0x00, 0x00, 0x00 };
+                if (on) {
+                    buf[0] = 0x00;
+                    on = NO;
+                } else {
+                    buf[0] = 0x01;
+                    on = YES;
+                }
+                for (NSDictionary *tweet in payload) {
+                    NSString *name = [tweet objectForKey: @"name"];
+//                    NSString *text = [tweet objectForKey:@"text" ];
+                    
+//                    if( [name isEqualToString:@"AustinTest2"] ) {
+//                        NSLog(@"tweet austin 2");
+//                        buf[1] = 0x01;
+//                    } else if( [name isEqualToString:@"chrisallick"] ) {
+//                        NSLog(@"tweet mike newell");
+//                        buf[2] = 0x01;
+//                    } else if( [name isEqualToString:@"newshorts"] ) {
+                    if( [name isEqualToString:@"newshorts"] ) {
+                        NSLog(@"tweet from mike");
+                        buf[3] = 0x01;
+                    }
+                    
+                    NSData *data = [[NSData alloc] initWithBytes:buf length:4];
+                    [ble write:data];
+                }
+            }
         }
-        
-        if( [color isEqualToString:@"red"] ) {
-            buf[1] = 0x01;
-        }
-        
-        if( [color isEqualToString:@"green"] ) {
-            buf[2] = 0x01;
-        }
-        
-        if( [color isEqualToString:@"blue"] ) {
-            buf[3] = 0x01;
-        }
-        
-        NSData *data = [[NSData alloc] initWithBytes:buf length:4];
-        [ble write:data];
-        
-        NSLog(@"success");
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON){
         UInt8 buf[4] = { 0x00, 0x00, 0x00, 0x00};
         
@@ -190,13 +202,13 @@
         NSData *data = [[NSData alloc] initWithBytes:buf length:4];
         [ble write:data];
         
-        NSLog(@"error");
+        NSLog(@"Error making AJAX request.");
     }];
     [operation start];
 }
 
 -(IBAction)sendDigitalOut:(id)sender {
-    [NSTimer scheduledTimerWithTimeInterval:(float)2.0 target:self selector:@selector(sendData) userInfo:nil repeats:YES];
+    [NSTimer scheduledTimerWithTimeInterval:2.0 target:self selector:@selector(sendData) userInfo:nil repeats:YES];
 }
 
 /* Send command to Arduino to enable analog reading */
